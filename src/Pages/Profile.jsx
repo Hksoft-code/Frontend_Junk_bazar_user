@@ -183,7 +183,7 @@ const Profile = () => {
       <div className="flex  px-24 py-12 m-12 mt-24 justify-between items-center shadow-lg hover:shadow-2xl transition duration-300 ease-in-out  ">
         <div className="flex items-center">
           <img
-            src={"https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600"}
+            src={ profile?.profile || "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600"}
             className="w-[138px] h-[138px] mr-4 rounded-full"
             alt=""
           />
