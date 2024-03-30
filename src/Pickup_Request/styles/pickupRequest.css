@@ -1,18 +1,16 @@
-.checkbox-round {
-    width: 1.5em;
-    height: 1.5em;
+.radio-round {
+    width: 1.3em;
+    height: 1.3em;
     background-color: white;
     vertical-align: middle;
     border: 5px solid #0a0a0a;
-    appearance: none; 
+    border-radius: 50%; /* Makes the radio button round */
+    appearance: none;
     -webkit-appearance: none;
-    outline: none; 
+    outline: none;
     cursor: pointer;
 }
 
-.checkbox-round:checked {
-    background-color: rgb(245, 170, 32);
-   
+.radio-round:checked {
+    background-color: #3CB043;
 }
-
-
