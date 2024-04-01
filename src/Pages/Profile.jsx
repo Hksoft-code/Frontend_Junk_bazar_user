@@ -99,6 +99,7 @@ const Profile = () => {
       const response = await axiosInstance.get("/getCurrentUser");
       if (response.status === 200) {
         const data = JSON.parse(response.data.data);
+        console.log("==== CURRENT USER ===", { data })
         setProfileData(data);
         const formData = {
           firstName: data?.firstName ? data?.firstName : '',
@@ -183,7 +184,7 @@ const Profile = () => {
       <div className="flex  px-24 py-12 m-12 mt-24 justify-between items-center shadow-lg hover:shadow-2xl transition duration-300 ease-in-out  ">
         <div className="flex items-center">
           <img
-            src={ profile?.profile || "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600"}
+            src={profile.profileUrl ? profile.profileUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGUYpBf56aEz0Oihd1-ZWykIwFmDf0yV_LHg&usqp=CAU"}
             className="w-[138px] h-[138px] mr-4 rounded-full"
             alt=""
           />
@@ -218,158 +219,144 @@ const Profile = () => {
         </div>
         <div className="text-center flex mt-8">
           <div >
-            <label >
+            <label className="relative">
+              <input
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                onChange={handleFileChange}
+                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                ref={fileInputRef}
+              />
               <button
                 type="button"
                 className="shadow-0 0 7px 0 cursor-pointer text-[14px] font-[600] text-[#4A4A4A] bg-green-50 rounded-[8px] w-[186px] h-[45px] btn-shadow"
                 onClick={() => {
-                  !profile?.firstName && !profile.lastName ? setUserFormType('add') : handleFileButtonClick()
+                  !profile?.firstName && !profile.lastName ? setUserFormType('add') : handleFileButtonClick();
                 }}
               >
                 {!profile?.firstName && !profile.lastName ? "Add Profile Details" : "Upload New Picture"}
               </button>
-              {
-                !profile?.firstName && !profile.lastName ?
-                  <input
-                    type="file"
-                    accept=".png, .jpg, .jpeg"
-                    onChange={handleFileChange}
-                    style={{
-                      position: "relative",
-                      top: 0,
-                      left: 0,
-                      opacity: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    ref={fileInputRef}
-                  /> :
-                  null
-              }
-
             </label>
+
           </div>
         </div>
       </div>
       {
-        userFormType &&
-        <div className="px-24 mx-12 mt-2 mb-2">
-          <h6 className="font-medium py-1 pb-4 text-base text-center">Please fill the details.</h6>
-          <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-4">
-            {/* first name */}
-            <div className="col-span-2 flex items-center">
-              <label htmlFor="firstName">First Name</label>
-            </div>
-            <div className="col-span-1 flex items-center">
-              <span>:</span>
-            </div>
-            <div className="col-span-2">
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="bg-green-50 w-full p-1"
-              />
-              {errors.firstName && <span className="text-red-500 text-xs">{errors.firstName}</span>}
-            </div>
-            {/* last name */}
-            <div className="col-span-2 flex items-center">
-              <label htmlFor="lastName">Last Name</label>
-            </div>
-            <div className="col-span-1 flex items-center">
-              <span>:</span>
-            </div>
-            <div className="col-span-2">
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                className="bg-green-50 w-full p-1"
-              />
-              {errors.lastName && <span className="text-red-500 text-xs">{errors.lastName}</span>}
-            </div>
-            {
-              userFormType !== "edit" ?
-                <>            {/* state */}
-                  <div className="col-span-2 flex items-center">
-                    <label htmlFor="state">State</label>
-                  </div>
-                  <div className="col-span-1 flex items-center">
-                    <span>:</span>
-                  </div>
-                  <div className="col-span-2">
-                    <select
-                      id="state"
-                      name="stateCode"
-                      value={formData.state}
-                      onChange={handleChange}
-                      className="bg-green-50 w-full p-1"
-                    >
-                      <option value="">Select</option>
-                      {states.map((state) => (
-                        <option key={state.state_code} value={state.state_code}>
-                          {state.name}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.stateCode && <span className="text-red-500 text-xs">{errors.stateCode}</span>}
-                  </div>
-                  {/* city */}
-                  <div className="col-span-2 flex items-center">
-                    <label htmlFor="city">City</label>
-                  </div>
-                  <div className="col-span-1 flex items-center">
-                    <span>:</span>
-                  </div>
-                  <div className="col-span-2">
-                    <select
-                      id="city"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      className="bg-green-50 w-full p-1"
-                    >
-                      <option value="">Select</option>
-                      {cities.map((city) => (
-                        <option key={city?.id} value={city?.name}>
-                          {city?.name}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.city && <span className="text-red-500 text-xs">{errors.city}</span>}
-                  </div>
+        userFormType?.length ?
+          <div className="px-24 mx-12 mt-2 mb-2">
+            <h6 className="font-medium py-1 pb-4 text-base text-center">Please fill the details.</h6>
+            <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-4">
+              {/* first name */}
+              <div className="col-span-2 flex items-center">
+                <label htmlFor="firstName">First Name</label>
+              </div>
+              <div className="col-span-1 flex items-center">
+                <span>:</span>
+              </div>
+              <div className="col-span-2">
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="bg-green-50 w-full p-1"
+                />
+                {errors.firstName && <span className="text-red-500 text-xs">{errors.firstName}</span>}
+              </div>
+              {/* last name */}
+              <div className="col-span-2 flex items-center">
+                <label htmlFor="lastName">Last Name</label>
+              </div>
+              <div className="col-span-1 flex items-center">
+                <span>:</span>
+              </div>
+              <div className="col-span-2">
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="bg-green-50 w-full p-1"
+                />
+                {errors.lastName && <span className="text-red-500 text-xs">{errors.lastName}</span>}
+              </div>
+                  <>            {/* state */}
+                    <div className="col-span-2 flex items-center">
+                      <label htmlFor="state">State</label>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                      <span>:</span>
+                    </div>
+                    <div className="col-span-2">
+                      <select
+                        id="state"
+                        name="stateCode"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className="bg-green-50 w-full p-1"
+                      >
+                        <option value="">Select</option>
+                        {states.map((state) => (
+                          <option key={state.state_code} value={state.state_code}>
+                            {state.name}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.stateCode && <span className="text-red-500 text-xs">{errors.stateCode}</span>}
+                    </div>
+                    {/* city */}
+                    <div className="col-span-2 flex items-center">
+                      <label htmlFor="city">City</label>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                      <span>:</span>
+                    </div>
+                    <div className="col-span-2">
+                      <select
+                        id="city"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        className="bg-green-50 w-full p-1"
+                      >
+                        <option value="">Select</option>
+                        {cities.map((city) => (
+                          <option key={city?.id} value={city?.name}>
+                            {city?.name}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.city && <span className="text-red-500 text-xs">{errors.city}</span>}
+                    </div>
 
-                  {/* address */}
-                  <div className="col-span-2 flex items-center">
-                    <label htmlFor="address">Address</label>
-                  </div>
-                  <div className="col-span-1 flex items-center">
-                    <span>:</span>
-                  </div>
-                  <div className="col-span-2">
-                    <input
-                      type="text"
-                      id="address"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      className="bg-green-50 w-full p-1"
-                    />
-                    {errors.address && <span className="text-red-500 text-xs">{errors.address}</span>}
-                  </div>
-                </>
-                : null
-            }
-            <div className="col-span-5 flex justify-end">
-              <button type="button" className="mr-5 font-semibold text-[19px] p-[2] text-center bg-slate-100 w-full text-black rounded-[27px] outline-none border-none h-[55px] hover:opacity-80" onClick={handleClose}>Cancel</button>
-              <button type="submit" className="ml-5 font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80">Submit</button>
-            </div>
-          </form>
-        </div>
+                    {/* address */}
+                    <div className="col-span-2 flex items-center">
+                      <label htmlFor="address">Address</label>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                      <span>:</span>
+                    </div>
+                    <div className="col-span-2">
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        className="bg-green-50 w-full p-1"
+                      />
+                      {errors.address && <span className="text-red-500 text-xs">{errors.address}</span>}
+                    </div>
+                  </>
+              <div className="col-span-5 flex justify-end">
+                <button type="button" className="mr-5 font-semibold text-[19px] p-[2] text-center bg-slate-100 w-full text-black rounded-[27px] outline-none border-none h-[55px] hover:opacity-80" onClick={handleClose}>Cancel</button>
+                <button type="submit" className="ml-5 font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80">Submit</button>
+              </div>
+            </form>
+          </div>
+          : null
       }
       <Footer />
     </>
