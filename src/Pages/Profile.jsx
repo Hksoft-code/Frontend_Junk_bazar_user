@@ -23,7 +23,7 @@ const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-
+console.log({cities})
   const fileInputRef = React.createRef();
 
   const handleChange = (e) => {
@@ -71,7 +71,7 @@ const Profile = () => {
     const newErrors = {};
     for (const field in formData) {
       const value = formData[field];
-      if (userFormType === 'add') {
+      if (userFormType?.length) {
         // Verify all fields if userFormType is 'add'
         if (field === 'city' && value.length === 0) {
           newErrors[field] = 'Please select a city.';
@@ -80,7 +80,7 @@ const Profile = () => {
         } else if (field !== 'stateCode' && field !== 'city' && value.length < 4) {
           newErrors[field] = 'Field must be at least 4 characters long.';
         }
-      } else if (userFormType === 'edit') {
+      } else if (userFormType?.length) {
         // Verify only firstName and lastName if userFormType is 'edit'
         if ((field === 'firstName' || field === 'lastName') && value.length < 4) {
           newErrors[field] = 'Field must be at least 4 characters long.';
@@ -89,12 +89,13 @@ const Profile = () => {
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      userFormType === 'edit' ? updateProfile(null, formData?.firstName, formData.lastName) : addProfileDetails();
+      userFormType === 'edit' ? updateProfile(null, formData) : addProfileDetails();
     }
   };
 
 
   const fetchData = async () => {
+    let userData= {};
     try {
       const response = await axiosInstance.get("/getCurrentUser");
       if (response.status === 200) {
@@ -109,6 +110,7 @@ const Profile = () => {
           address: data?.address ? data?.address : ''
         };
         setFormData(formData)
+        userData = data;
       } else {
         console.warn("Unexpected server response:", response);
         // Handle the error or redirect to login page
@@ -116,13 +118,22 @@ const Profile = () => {
     } catch (error) {
       console.warn("Error fetching data:", error);
       // Handle the error or redirect to login page
+    } finally{
+      fetchCountry(userData?.stateCode) 
     }
   };
 
-  const fetchCountry = async () => {
+  const fetchCountry = async (previousStateCodeValue) => {
     const response = await getCountriesDetails();
     const { states } = response[0];
     setStates(states);
+    const value = previousStateCodeValue ? previousStateCodeValue : profile?.stateCode
+      const previousState = states.find((state) => {
+        console.log(value,"Nice")
+        return state.state_code === value
+      });
+      console.log({previousState,states})
+   if(previousState?.cities?.length) setCities(previousState?.cities );
   };
 
   useEffect(() => {
@@ -140,11 +151,9 @@ const Profile = () => {
     setUserFormType('')
   }
 
-  const updateProfile = async (imageKey, firstName, lastName) => {
-    const payload = {};
+  const updateProfile = async (imageKey, updatedData) => {
+    const payload = updatedData ? updatedData : {};
     if (imageKey) payload.profile = imageKey;
-    if (firstName) payload.firstName = firstName;
-    if (lastName) payload.lastName = lastName;
     try {
       await axiosInstance.post("/updateProfile", payload);
       handleClose();
@@ -172,12 +181,12 @@ const Profile = () => {
         file,
         imageSignedObj.signedUrl
       );
-      await updateProfile(imageKey, formData?.firstName, formData?.lastName);
+      await updateProfile(imageKey, formData);
     } catch (error) {
       console.log('error', error)
     }
   };
-
+console.group({formData})
   return (
     <>
       <Nav />
@@ -293,7 +302,7 @@ const Profile = () => {
                       <select
                         id="state"
                         name="stateCode"
-                        value={formData.state}
+                        value={formData.stateCode}
                         onChange={handleChange}
                         className="bg-green-50 w-full p-1"
                       >
@@ -322,7 +331,7 @@ const Profile = () => {
                         className="bg-green-50 w-full p-1"
                       >
                         <option value="">Select</option>
-                        {cities.map((city) => (
+                        {cities?.map((city) => (
                           <option key={city?.id} value={city?.name}>
                             {city?.name}
                           </option>
