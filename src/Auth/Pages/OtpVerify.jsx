@@ -10,9 +10,11 @@ import showSuccessMessage from "../../utils/SweetAlert.jsx";
 import { otpVerifyService, resendOtpService } from "../../Services/user.js";
 import showErrorMessage from "../../utils/ErrorAlert.jsx";
 import "../style.css/auth.css";
+import ErrorMessage from "./ErrorMessage.jsx";
 
 const OtpVerify = () => {
   const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,6 +35,7 @@ const OtpVerify = () => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
+        setOtpError(errorMessage);
     }
   };
 
@@ -42,6 +45,7 @@ const OtpVerify = () => {
     if (regex.test(otpValue)) {
       setOtp(otpValue);
     }
+    if(otpError) setOtpError('');
   };
 
   const handleResend = async () => {
@@ -52,6 +56,7 @@ const OtpVerify = () => {
       );
 
       setOtp("");
+      setOtpError('');
     } catch (error) {
       console.error("Error", error);
       const errorMessage = !error.response.data.error.message
@@ -138,6 +143,8 @@ const OtpVerify = () => {
                     renderInput={(props) => <input {...props} />}
                   />
                 </div>
+              {otpError?.length ? <ErrorMessage errorMessage={otpError} /> : <div className="p-[0.90rem]"></div>}
+
                 <div
                   id="OTPSentToRESENDCODE2"
                   className="mt-5 text-center text-[#707070] ml-16 w-3/4 font-['Gilroy-Bold']"
@@ -196,8 +203,10 @@ const OtpVerify = () => {
                 </div> */}
                 <Button
                   label="Continue"
-                  classname="cursor-pointer font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80"
+                  classname={`${!otpError ? "cursor-pointer" : "cursor-not-allowed"
+                }  font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80`}
                   handleClick={otpVerify}
+                  disabled={otpError}
                 />
                 <div className="relative text-center mt-2">
                   <span className="text-darkslategray-200">

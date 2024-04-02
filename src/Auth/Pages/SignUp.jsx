@@ -11,11 +11,13 @@ import "react-phone-number-input/style.css";
 import SmallSignUp from "./SmallSignUp.jsx";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { signUpUser } from "../../Services/user.js";
+import ErrorMessage from "./ErrorMessage.jsx";
+
 const SignUp = () => {
   const navigate = useNavigate();
-
   const [checked, setChecked] = React.useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [signUpError, setSignUpError] = useState("");
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
 
   const handlePhoneNumberChange = (e) => {
@@ -29,7 +31,6 @@ const SignUp = () => {
   };
   const signUpService = async () => {
     if (checked) {
-      // console.log("phone number ", phoneNumber.slice(3, 13));
       const mobile = phoneNumber.slice(3, 13);
       const payload = {
         dialCode: "+91",
@@ -46,18 +47,10 @@ const SignUp = () => {
           });
         }
       } catch (error) {
-        console.error("error", error);
-
-        if (error.response) {
-        } else if (error.request) {
-          // Client made a request but response is not received
-          console.log("<<<<<<<Response Not Received>>>>>>>>");
-          console.log(error.request);
-        } else {
-          // Other case
-          console.log("Error", error.message);
-        }
-        // Error handling here
+        const errorMessage = !error.response.data.error.message
+          ? error.response.data.error?._message
+          : error.response.data.error.message;
+        setSignUpError(errorMessage);
       }
     } else {
     }
@@ -113,9 +106,14 @@ const SignUp = () => {
                   international
                   defaultCountry="IN"
                   value={phoneNumber}
-                  onChange={setPhoneNumber}
+                  onChange={(number) => {
+                    console.log({ number })
+                    setPhoneNumber(number)
+                    if (signUpError) setSignUpError('')
+                  }}
                 />
               </div>
+              {signUpError?.length ? <ErrorMessage errorMessage={signUpError} /> : <div className="p-[0.75rem]"></div>}
               {/* <LabeledInput className="col-span-2"
                             type='number'
                             inputMode='numeric'
@@ -146,10 +144,10 @@ const SignUp = () => {
               </div>
               <Button
                 label="Continue"
-                classname={`${
-                  checked ? "cursor-pointer" : "cursor-not-allowed"
-                } font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80`}
+                classname={`${checked && !signUpError ? "cursor-pointer" : "cursor-not-allowed"
+                  } font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80`}
                 handleClick={signUpService}
+                disabled={signUpError}
               />
               <p className="text-[14px] text-[#4A4A4A] mt-2 text-center font-[400] cursor-pointer">
                 Already have an account?{" "}

@@ -9,10 +9,13 @@ import "react-phone-number-input/style.css";
 import SmallSignIn from "./SmallSignIn.jsx";
 import { loginUser } from "../../Services/user.js";
 import "../style.css/auth.css";
+import ErrorMessage from "./ErrorMessage.jsx";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [signInError, setSignInError] = useState("");
+
   const SignInService = async () => {
     try {
       const mobile = phoneNumber.slice(3, 13);
@@ -29,6 +32,7 @@ const SignIn = () => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
+        setSignInError(errorMessage)
     }
   };
 
@@ -84,10 +88,13 @@ const SignIn = () => {
                     international
                     defaultCountry="IN"
                     value={phoneNumber}
-                    onChange={setPhoneNumber}
+                    onChange={(number) => {
+                      setPhoneNumber(number)
+                      if (signInError) setSignInError('')
+                    }}
                   />
                 </div>
-
+              {signInError?.length ? <ErrorMessage errorMessage={signInError} /> : <div className="p-3"></div>}
                 <div className="mt-10"></div>
               </section>
 
@@ -120,11 +127,12 @@ const SignIn = () => {
                 {/* </p> 
                 </div> */}
                 <Button
-                  label="Continue"
-                  classname="font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80"
-                  handleClick={SignInService}
-                />
-
+                label="Continue"
+                classname={`${!signInError ? "cursor-pointer" : "cursor-not-allowed"
+                  } font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80`}
+                handleClick={SignInService}
+                disabled={signInError}
+              />
                 <p className="text-[14px] text-[#4A4A4A] mt-2 text-center font-[400] cursor-pointer">
                   Don't have an account?{" "}
                   <span

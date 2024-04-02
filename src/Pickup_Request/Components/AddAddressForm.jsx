@@ -4,6 +4,7 @@ import { getCountriesDetails } from "../../Services/user";
 import { addAddrress } from "../../Services/pickupRequest";
 import showErrorMessage from "../../utils/ErrorAlert";
 import showSuccessMessage from "../../utils/SweetAlert";
+import ErrorMessage from "../../Auth/Pages/ErrorMessage";
 
 const AddAddressForm = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -16,7 +17,7 @@ const AddAddressForm = () => {
   const [selectedDialCode, setDialCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [seed, setSeed] = useState(1);
-
+  const [error, setError] = useState('');
 
   const fetchCountry = async () => {
     try {
@@ -24,31 +25,26 @@ const AddAddressForm = () => {
 
       const countriesAndStatesData = response;
 
-      console.log("countriesAndStatesData", countriesAndStatesData);
+      console.log("countriesAndStatesData", {countriesAndStatesData});
 
       setcountriesAndStates(countriesAndStatesData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.warn("Error fetching data:", error);
     }
   };
 
-  console.log("countriesAndStates", countriesAndStates);
-
   const handleCountryChange = (event) => {
     const selectedCountry = event.target.value;
-
-    console.log("selectedCountry", selectedCountry);
     setSelectedCountry(selectedCountry);
     setSelectedState("");
     for (let i = 0; countriesAndStates.length > i; i++) {
-      console.log("dial Code", countriesAndStates[0].phone_code);
       setDialCode(`${countriesAndStates[0].phone_code}`);
     }
   };
   // Get the list of states based on the selected country
   const states = selectedCountry
     ? countriesAndStates?.find((country) => country.iso2 === selectedCountry)
-        ?.states || []
+      ?.states || []
     : [];
   const handleStateChange = (event) => {
     setSelectedState(event.target.value);
@@ -82,8 +78,6 @@ const AddAddressForm = () => {
         selectedDialCode,
         phoneNumber
       );
-      console.log("Add Address Response", addressRepo);
-      showSuccessMessage("Add Address Successfully", "success");
       // const addresData = addressRepo.dat;
       setSeed(Math.random());
       setSelectedCountry("");
@@ -91,11 +85,10 @@ const AddAddressForm = () => {
       setDialCode("")
       window.location.reload(true)
     } catch (error) {
-      console.error("error", error);
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
-      showErrorMessage(errorMessage, "error");
+      setError(errorMessage);
     }
   };
 
@@ -115,6 +108,7 @@ const AddAddressForm = () => {
                     required
                     onChange={(e) => {
                       setFullName(e.target.value);
+                      if (error) setError('');
                     }}
                     placeholder="Enter Full Name"
                     className="w-full p-1 ml-3 text-black outline-none bg-transparent"
@@ -131,6 +125,7 @@ const AddAddressForm = () => {
                       required
                       onChange={(e) => {
                         setAddress(e.target.value);
+                        if (error) setError('');
                       }}
                       placeholder="Enter Address"
                       className="w-full p-1 ml-3 text-black outline-none bg-transparent"
@@ -187,6 +182,7 @@ const AddAddressForm = () => {
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
               <div className="col-span-6 sm:col-span-3">
@@ -215,6 +211,8 @@ const AddAddressForm = () => {
                         required
                         onChange={(e) => {
                           setPhoneNumber(e.target.value);
+                          if (error) setError('');
+
                         }}
                         placeholder="Enter Phone Number"
                         className="w-full p-1 ml-3 text-black outline-none bg-transparent"
@@ -236,6 +234,8 @@ const AddAddressForm = () => {
                           required
                           onChange={(e) => {
                             setPincode(e.target.value);
+                            if (error) setError('');
+
                           }}
                           placeholder="Enter Pincode"
                           className="w-full p-1 ml-3 text-black outline-none bg-transparent"
@@ -252,7 +252,11 @@ const AddAddressForm = () => {
                             className="w-full bg-[#80d7421c] p-1"
                             value={selectedCity}
                             disabled={!selectedState}
-                            onChange={handleCityChange}
+                            onChange={(e) => {
+                              handleCityChange(e);
+                              if (error) setError('');
+
+                            }}
                           >
                             <option value="">Select City</option>
                             {cities.map((cityObj) => (
@@ -268,11 +272,13 @@ const AddAddressForm = () => {
                 </div>
               </div>
             </div>
-
+            {error?.length ? <ErrorMessage errorMessage={error === "Field required" ? "Please Fill All The Input Fields" : error} /> : <div className="p-3"></div>}
             <div class="mt-8 flex justify-end">
               <button
                 onClick={handleAddAddress}
-                class="bg-[#5AB344] text-white px-4 py-2 rounded-lg "
+                className={`${!error ? "cursor-pointer" : "cursor-not-allowed"
+                  } bg-[#5AB344] text-white px-4 py-2 rounded-lg`}
+                disabled={error}
               >
                 Submit
               </button>

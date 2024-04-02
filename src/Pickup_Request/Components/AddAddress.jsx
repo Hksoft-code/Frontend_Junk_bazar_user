@@ -43,7 +43,6 @@ const AddAddress = () => {
   const getAddress = async () => {
     try {
       const allAddress = await getAllAddress();
-      console.log("user login from Service File", allAddress);
       setAddress(allAddress.address);
       setSelectAddress(allAddress.address[0]);
       console.log("selected Address", selectAddress);
@@ -98,7 +97,7 @@ const AddAddress = () => {
   return (
     <>
       <div className="">
-        <div className="max-w-2xl mx-auto mt-24">
+        <div className="max-w-2xl mx-auto mt-12">
           {/* <div
             onClick={ChangeAddress}
             className="cursor-pointer w-full text-right"
@@ -112,28 +111,27 @@ const AddAddress = () => {
             <span className="flex-grow bg-gray-200 rounded h-1"></span>
           </h3>
           {selectAddress ? (
-            <div className="flex p-3 mb-5 gap-3 bg-white shadow-xl border-l-8 border-[#3CB043]  rounded-xl overflow-hidden items-start justify-start">
-              <div className="relative w-10 h-10 flex-shrink-0">
+            <div className="grid grid-cols-[auto,1fr] p-3 mb-5 gap-3 bg-white shadow-xl shadow-inner  rounded-xl overflow-hidden items-start justify-start transition-transform hover:shadow-2xl">
+              <div className="relative flex justify-center items-center w-10 h-10">
                 <input
                   checked={defaultAddress}
-                  handleChange={() => setChecked((prevState) => !prevState)}
-                  type="checkbox"
-                  className="checkbox-round"
+                  onChange={() => setChecked((prevState) => !prevState)}
+                  type="radio"
+                  className="radio-round mt-2"
                 />
               </div>
-
-              <div className=" gap-2 py-2">
-                <p className="text-xl font-bold">{selectAddress?.fullName}</p>
-
+              <div className="gap-2 py-2">
+                <p className="text-xl font-medium">{selectAddress?.fullName}</p>
                 <p className="text-gray-500">
-                  {selectAddress?.address} {selectAddress?.city}{" "}
+                  {selectAddress?.address},{' '} {selectAddress?.city},{' '}
                   {selectAddress?.pincode}
                 </p>
                 <p className="text-gray-500">
-                  {selectAddress?.dialCode} {selectAddress?.phoneNumber}
+                  {selectAddress?.stateCode} {selectAddress?.dialCode} {selectAddress?.phoneNumber}
                 </p>
               </div>
             </div>
+
           ) : (
             <div></div>
           )}
@@ -153,13 +151,14 @@ const AddAddress = () => {
                 Pickup From this address
               </div>
             )}
-
+            {selectAddress && (
             <div
               onClick={onOpenModal}
               className="cursor-pointer text-center shadow-md inline-block px-12 border border-[#585858] py-3 text-sm font-medium text-[#585858]  focus:outline-none focus:ring rounded-3xl"
             >
               Edit Address
             </div>
+            )}
             <Modal open={open} onClose={onCloseModal} center>
               <Edit_Address_form data={selectAddress} />
             </Modal>
