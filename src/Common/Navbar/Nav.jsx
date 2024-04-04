@@ -80,7 +80,7 @@ const Nav = () => {
     <nav>
       <div>
         <div
-          className={`flex justify-between p-2 px-7 md:px-20 lg:px-0 lg:justify-around items-center fixed top-0 left-0 w-full z-10 ${
+          className={`flex justify-between p-2 py-3 px-7 md:px-20 lg:px-0 lg:justify-around items-center fixed top-0 left-0 w-full z-10 ${
             show ? "bg-lime-300 duration-700" : "transparent duration-700"
           }`}
         >
