@@ -4,6 +4,7 @@ import { getCountriesDetails } from "../../Services/user";
 import { addAddrress, editAddrress } from "../../Services/pickupRequest";
 import showErrorMessage from "../../utils/ErrorAlert";
 import showSuccessMessage from "../../utils/SweetAlert";
+import ErrorMessage from "../../Auth/Pages/ErrorMessage";
 
 const Edit_Address_form = (props) => {
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -16,6 +17,7 @@ const Edit_Address_form = (props) => {
   const [selectedDialCode, setDialCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countriesAndStates, setcountriesAndStates] = useState([]);
+  const [errorMsg, setErrorMsg] = useState('')
 
   // console.log("datat passess", props.data);
   const setData = props?.data;
@@ -105,7 +107,8 @@ const Edit_Address_form = (props) => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
-      showErrorMessage(errorMessage, "error");
+        setErrorMsg(errorMessage)
+      // showErrorMessage(errorMessage, "error");
     }
   };
 
@@ -282,7 +285,7 @@ const Edit_Address_form = (props) => {
                 </div>
               </div>
             </div>
-
+            {errorMsg?.length ? <ErrorMessage errorMessage={errorMsg} /> : null }
             <div class="mt-8 flex justify-end">
               <button
                 onClick={handleAddAddress}

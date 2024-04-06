@@ -6,7 +6,7 @@ import showErrorMessage from "../../utils/ErrorAlert";
 import showSuccessMessage from "../../utils/SweetAlert";
 import ErrorMessage from "../../Auth/Pages/ErrorMessage";
 
-const AddAddressForm = () => {
+const AddAddressForm = ({setAddAddressForm,getAddress}) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -84,6 +84,8 @@ const AddAddressForm = () => {
       setSelectedState("");
       setDialCode("")
       window.location.reload(true)
+      setAddAddressForm(false)
+      getAddress();
     } catch (error) {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
@@ -274,6 +276,12 @@ const AddAddressForm = () => {
             </div>
             {error?.length ? <ErrorMessage errorMessage={error === "Field required" ? "Please Fill All The Input Fields" : error} /> : <div className="p-3"></div>}
             <div class="mt-8 flex justify-end">
+            <button
+                onClick={()=>setAddAddressForm(false)}
+                className="cursor-pointer bg-gray-200 mx-5 text-black text-bold px-4 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
               <button
                 onClick={handleAddAddress}
                 className={`${!error ? "cursor-pointer" : "cursor-not-allowed"

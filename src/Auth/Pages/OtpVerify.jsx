@@ -8,7 +8,7 @@ import OTPInput from "react-otp-input";
 import { IoChevronBackOutline } from "react-icons/io5";
 import showSuccessMessage from "../../utils/SweetAlert.jsx";
 import { otpVerifyService, resendOtpService } from "../../Services/user.js";
-import showErrorMessage from "../../utils/ErrorAlert.jsx";
+// import showErrorMessage from "../../utils/ErrorAlert.jsx";
 import "../style.css/auth.css";
 import ErrorMessage from "./ErrorMessage.jsx";
 
@@ -20,7 +20,7 @@ const OtpVerify = () => {
 
   const otpVerify = async () => {
     if(otp?.length < 6) {
-      showErrorMessage("Please provide the 6 digits otp", "error");
+      setOtpError("Please provide the 6 digits otp", "error");
       return;
     }
     try {

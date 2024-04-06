@@ -54,10 +54,10 @@ const otpVerifyService = async (phoneNumber, otp) => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
-      showErrorMessage(errorMessage, "error");
+      // showErrorMessage(errorMessage, "error");
     } else {
       // Handle other types of errors
-      showErrorMessage("An error occurred", "error");
+      // showErrorMessage("An error occurred", "error");
     }
     throw error; // Rethrow the error to propagate it to the calling code
   }
@@ -94,7 +94,7 @@ const loginUser = async (dialCode, phoneNumber) => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
-      showErrorMessage(errorMessage, "error");
+      // showErrorMessage(errorMessage, "error");
     } else {
       // Handle other types of errors
     }
@@ -119,7 +119,7 @@ const signUpUser = async (payload) => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
-      showErrorMessage(errorMessage, "error");
+      // showErrorMessage(errorMessage, "error");
     } else {
       // Handle other types of errors
     }
@@ -146,7 +146,7 @@ const resendOtpService = async (dialCode, phoneNumber) => {
       const errorMessage = !error.response.data.error.message
         ? error.response.data.error?._message
         : error.response.data.error.message;
-      showErrorMessage(errorMessage, "error");
+      // showErrorMessage(errorMessage, "error");
     } else {
       // Handle other types of errors
     }

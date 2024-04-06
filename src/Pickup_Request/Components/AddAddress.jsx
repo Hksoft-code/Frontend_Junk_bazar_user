@@ -7,17 +7,18 @@ import { Modal } from "react-responsive-modal";
 import { Link } from "react-router-dom";
 
 import Edit_Address_form from "./Edit_Address_form";
+import AddAddressForm from "./AddAddressForm";
 
 const AddAddress = () => {
   const [addres, setAddress] = useState();
   const [checked, setChecked] = useState(false);
   const [selectAddress, setSelectAddress] = useState("");
-  const [defaultAddress, setDefault] = useState(true);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
   const location = useLocation();
+  const [addAddressForm, setAddAddressForm] = useState(false)
   const passData = location.state ? location.state.passData : null;
 
   console.log("card data list", passData);
@@ -28,7 +29,7 @@ const AddAddress = () => {
   //     addToCartId: passData.addToCartId,
   //     scraplist: passData.scrapList,
   //   };
-  //   navigate("/addAddress", {
+  //   navigate("/addAddressForm", {
   //     state: {
   //       payload,
   //     },
@@ -72,26 +73,13 @@ const AddAddress = () => {
       },
     });
   };
-  const AdAddress = async () => {
-    const payload = {
-      fullName: selectAddress?.fullName ? selectAddress?.fullName : "",
-      scrapId: passData.scrapId,
-      stateCode: selectAddress?.stateCode ? selectAddress.stateCode : "",
-      countryCode: selectAddress?.countryCode ? selectAddress?.countryCode : "",
-      addressId: selectAddress?.addressId ? selectAddress?.addressId : "", // addressId
-      pincode: selectAddress?.pincode ? selectAddress?.pincode : "",
-      dialCode: selectAddress?.dialCode ? selectAddress?.dialCode : "",
-      phoneNumber: selectAddress?.phoneNumber ? selectAddress?.phoneNumber : "",
-      address: selectAddress?.address ? selectAddress?.address : "",
-      city: selectAddress?.city ? selectAddress?.city : "",
-      addToCartId: passData.addToCartId,
-      scraplist: passData.scrapList,
-    };
-    navigate("/addAddress", {
-      state: {
-        payload,
-      },
-    });
+  const openAddressForm = () => {
+    setAddAddressForm(true);
+  };
+
+  const onChange = (item) => {
+    console.log({ item })
+    setSelectAddress(item);
   };
 
   return (
@@ -110,8 +98,9 @@ const AddAddress = () => {
             <span className="mx-3 text-lg font-medium"></span>
             <span className="flex-grow bg-gray-200 rounded h-1"></span>
           </h3>
-          {selectAddress ? (
-            <div className="grid grid-cols-[auto,1fr] p-3 mb-5 gap-3 bg-white shadow-xl shadow-inner  rounded-xl overflow-hidden items-start justify-start transition-transform hover:shadow-2xl">
+          {/* // Address */}
+          {/* {selectAddress ? (
+            <div className="grid grid-cols-[auto,1fr] p-3 mb-5 gap-3 bg-white shadow-xl shadow-inner   overflow-hidden items-start justify-start  rounded-xl transition-transform hover:shadow-2xl">
               <div className="relative flex justify-center items-center w-10 h-10">
                 <input
                   checked={defaultAddress}
@@ -134,30 +123,64 @@ const AddAddress = () => {
 
           ) : (
             <div></div>
-          )}
+          )} */}
+          {
+            addAddressForm ?
+              <AddAddressForm setAddAddressForm={setAddAddressForm}
+                getAddress={getAddress}
+              /> :
+              <>
+                {addres?.map((item, i) => (
+                  <div
+                    onChange={() => onChange(item)}
+                    className={`shadow-inner flex p-3 gap-3 mt-5 bg-white shadow-xl rounded-xl overflow-hidden items-center justify-start transition-transform hover:shadow-2xl ${item._id === selectAddress?._id ? 'border-2 border-green-500' : 'border-[#EEF5FF]'}`}
+                    >
+                    <div className="relative w-24 h-16 flex-shrink-0 ">
+                      <input
+                        checked={item._id === selectAddress?._id}
+                        type="checkbox"
+                        className="checkbox-round scale-125"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 py-2 ">
+                      <p className="text-xl font-bold">{item.fullName}</p>
+
+                      <p className="text-gray-500">
+                        {item.address} {item.city} {item.pincode}
+                      </p>
+                      <p className="text-gray-500">
+                        {item?.dialCode} {item?.phoneNumber}
+                      </p>
+                    </div>
+                  </div>
+                ))}</>
+          }
 
           <div className="flex flex-col gap-6 mx-auto mt-10">
             <div
-              className="cursor-pointer shadow-md  w-full text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#3CB043] focus:outline-none focus:ring rounded-3xl"
-              onClick={AdAddress}
+              className="cursor-pointer shadow-md  w-full text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#6db75c] focus:outline-none focus:ring rounded-3xl"
+              onClick={openAddressForm}
             >
               Add New Address
             </div>
             {selectAddress && (
-              <div
+              <button
                 onClick={handlePickup}
-                className="cursor-pointer shadow-md   text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#3CB043] focus:outline-none focus:ring rounded-3xl"
+                disabled={addAddressForm}
+                className={`shadow-md text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#697a6e] focus:outline-none focus:ring rounded-3xl ${addAddressForm ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
               >
                 Pickup From this address
-              </div>
+              </button>
             )}
             {selectAddress && (
-            <div
-              onClick={onOpenModal}
-              className="cursor-pointer text-center shadow-md inline-block px-12 border border-[#585858] py-3 text-sm font-medium text-[#585858]  focus:outline-none focus:ring rounded-3xl"
-            >
-              Edit Address
-            </div>
+              <button
+                onClick={onOpenModal}
+                disabled={addAddressForm}
+                className={`text-center shadow-md inline-block px-12 border border-[#585858] py-3 text-sm font-medium text-[#585858]  focus:outline-none focus:ring rounded-3xl ${addAddressForm ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+              >
+                Edit Address
+              </button>
             )}
             <Modal open={open} onClose={onCloseModal} center>
               <Edit_Address_form data={selectAddress} />

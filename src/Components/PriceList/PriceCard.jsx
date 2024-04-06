@@ -166,36 +166,35 @@ const PriceCardComponent = () => {
         key={item.scrapId}
         className="relative flex w-full flex-col items-center rounded-lg border border-gray-100  cardshadow"
       >
-        <div className="relative mx-2 sm:mx-3 mt-2 sm:mt-3 flex h-36 sm:h-60 px-3 rounded-xl w-full">
+        <div className="relative mx-2 sm:mx-3 mt-2 sm:mt-3 flex h-44  px-3 rounded-xl w-full">
           <img className="w-full rounded-xl" src={item?.docUrl} alt="product" />
           {/* <span className="absolute -top-3 left-0 m-3 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
             39% OFF
           </span> */}
         </div>
-        <div className="mt-1 sm:mt-4 px-3 sm:px-5 pb-3 sm:pb-5  w-full">
-          <div className="opacity-80 text-[20px] min-xxl:text-[25px] font-['Gilroy-SemiBold'] text-[#4a4a4a] ">
+        <div className="mt-1  px-3  w-full">
+          <div className="opacity-80 text-base font-semibold text-[#4a4a4a] ">
             {item.scrapName}
           </div>
           {/* <h5 className="text-lg  tracking-tight text-slate-900">{item.scrapName}</h5> */}
 
-          <div className="sm:mt-2 mb-2 sm:mb-5 flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <p>
-              <span className="text-[14px] min-xxl:text-[17px] font-bold text-slate-900 truncate">
-                {" "}
+              <span className="text-sm text-red-700  font-bold text-slate-900 truncate">
                 ₹ {item?.price}-{item?.quantityType}
               </span>
             </p>
           </div>
-          <div className="flex flex-row items-center gap-2 ">
+          <div className="flex flex-row items-center gap-5 py-3 ">
             <div>
               {isItemInCart(item?.scrapId.toString()) ? (
                 <div
                   onClick={() => handleAddToCard(item?.scrapId)}
-                  className="w-full bg-amber-500 cursor-pointer flex items-center justify-center rounded-full  px-0 sm:px-2 md:px-3 lg:px-5 h-8 min-xl:h-9 text-center text-sm min-md:text-[11px] min-xl:text-sm font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
+                  className="w-full bg-[#e67b0f] cursor-pointer flex items-center justify-center rounded-full  px-0 sm:px-2 md:px-3 lg:px-5 h-8 min-xl:h-9 text-center text-sm min-md:text-[11px] min-xl:text-sm font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
                 >
                   <div className="flex gap-1  items-center">
                     <div className="">{<CartIcon />}</div>
-                    <p className="hidden sm:block">Added to cart</p>
+                    <p className="hidden sm:block text-sm">Added to cart</p>
                   </div>
                   {/* {isItemInCart(item?.scrapId.toString()) ? (
                 <div className="flex gap-1  items-center">
