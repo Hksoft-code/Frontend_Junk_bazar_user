@@ -100,7 +100,7 @@ const AddAddress = () => {
           </h3>
           {/* // Address */}
           {/* {selectAddress ? (
-            <div className="grid grid-cols-[auto,1fr] p-3 mb-5 gap-3 bg-white shadow-xl shadow-inner  rounded-xl overflow-hidden items-start justify-start transition-transform hover:shadow-2xl">
+            <div className="grid grid-cols-[auto,1fr] p-3 mb-5 gap-3 bg-white shadow-xl shadow-inner   overflow-hidden items-start justify-start  rounded-xl transition-transform hover:shadow-2xl">
               <div className="relative flex justify-center items-center w-10 h-10">
                 <input
                   checked={defaultAddress}
@@ -133,12 +133,13 @@ const AddAddress = () => {
                 {addres?.map((item, i) => (
                   <div
                     onChange={() => onChange(item)}
-                    className="border-l-8 border-[#3CB043] flex p-3 gap-3 mt-5 bg-white shadow-xl  rounded-xl overflow-hidden items-center justify-start">
-                    <div className="relative w-16 h-12 flex-shrink-0 ">
+                    className={`shadow-inner flex p-3 gap-3 mt-5 bg-white shadow-xl rounded-xl overflow-hidden items-center justify-start transition-transform hover:shadow-2xl ${item._id === selectAddress?._id ? 'border-2 border-green-500' : 'border-[#EEF5FF]'}`}
+                    >
+                    <div className="relative w-24 h-16 flex-shrink-0 ">
                       <input
                         checked={item._id === selectAddress?._id}
                         type="checkbox"
-                        className="checkbox-round"
+                        className="checkbox-round scale-125"
                       />
                     </div>
 
@@ -158,7 +159,7 @@ const AddAddress = () => {
 
           <div className="flex flex-col gap-6 mx-auto mt-10">
             <div
-              className="cursor-pointer shadow-md  w-full text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#3CB043] focus:outline-none focus:ring rounded-3xl"
+              className="cursor-pointer shadow-md  w-full text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#6db75c] focus:outline-none focus:ring rounded-3xl"
               onClick={openAddressForm}
             >
               Add New Address
@@ -167,7 +168,7 @@ const AddAddress = () => {
               <button
                 onClick={handlePickup}
                 disabled={addAddressForm}
-                className={`shadow-md text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#3CB043] focus:outline-none focus:ring rounded-3xl ${addAddressForm ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                className={`shadow-md text-center inline-block px-12 py-3 text-sm font-medium text-white bg-[#697a6e] focus:outline-none focus:ring rounded-3xl ${addAddressForm ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
               >
                 Pickup From this address
               </button>

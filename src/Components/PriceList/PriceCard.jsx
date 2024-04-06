@@ -190,7 +190,7 @@ const PriceCardComponent = () => {
               {isItemInCart(item?.scrapId.toString()) ? (
                 <div
                   onClick={() => handleAddToCard(item?.scrapId)}
-                  className="w-full bg-amber-500 cursor-pointer flex items-center justify-center rounded-full  px-0 sm:px-2 md:px-3 lg:px-5 h-8 min-xl:h-9 text-center text-sm min-md:text-[11px] min-xl:text-sm font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
+                  className="w-full bg-[#e67b0f] cursor-pointer flex items-center justify-center rounded-full  px-0 sm:px-2 md:px-3 lg:px-5 h-8 min-xl:h-9 text-center text-sm min-md:text-[11px] min-xl:text-sm font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
                 >
                   <div className="flex gap-1  items-center">
                     <div className="">{<CartIcon />}</div>

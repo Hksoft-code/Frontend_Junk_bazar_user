@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import location from "../assets/PNG/location.png";
 import axiosInstance from "../api-config/axiosInstance";
-// import SettingsInput from "../Components/Setting/SettingInput";
 import add from "../assets/PNG/add.png";
 import edit from "../assets/PNG/edit.png";
 import Nav from "../Common/Navbar/Nav";
@@ -23,8 +22,7 @@ const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-console.log({cities})
-  const fileInputRef = React.createRef();
+  const fileInputRef = useRef(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -95,7 +93,7 @@ console.log({cities})
 
 
   const fetchData = async () => {
-    let userData= {};
+    let userData = {};
     try {
       const response = await axiosInstance.get("/getCurrentUser");
       if (response.status === 200) {
@@ -111,6 +109,7 @@ console.log({cities})
         };
         setFormData(formData)
         userData = data;
+        console.log({ userData });
       } else {
         console.warn("Unexpected server response:", response);
         // Handle the error or redirect to login page
@@ -118,8 +117,8 @@ console.log({cities})
     } catch (error) {
       console.warn("Error fetching data:", error);
       // Handle the error or redirect to login page
-    } finally{
-      fetchCountry(userData?.stateCode) 
+    } finally {
+      fetchCountry(userData?.stateCode)
     }
   };
 
@@ -128,12 +127,12 @@ console.log({cities})
     const { states } = response[0];
     setStates(states);
     const value = previousStateCodeValue ? previousStateCodeValue : profile?.stateCode
-      const previousState = states.find((state) => {
-        console.log(value,"Nice")
-        return state.state_code === value
-      });
-      console.log({previousState,states})
-   if(previousState?.cities?.length) setCities(previousState?.cities );
+    const previousState = states.find((state) => {
+      console.log(value, "Nice")
+      return state.state_code === value
+    });
+    console.log({ previousState, states })
+    if (previousState?.cities?.length) setCities(previousState?.cities);
   };
 
   useEffect(() => {
@@ -186,7 +185,9 @@ console.log({cities})
       console.log('error', error)
     }
   };
-console.group({formData})
+
+  const newUser = !profile.firstName && !profile.lastName;
+
   return (
     <>
       <Nav />
@@ -199,7 +200,7 @@ console.group({formData})
           />
           <span className="mt-8">
             <h2 className="font-semibold text-[#343434]  flex items-center text-[24px]">
-              {!profile.firstName && !profile.lastName ? "Name" : `${profile.firstName ? profile.firstName : '-'} ${profile.lastName ? profile.lastName : '-'}`}
+              {newUser ? "Name" : `${profile.firstName ? profile.firstName : '-'} ${profile.lastName ? profile.lastName : '-'}`}
               {
                 profile?.firstName && profile?.lastName ?
                   <img
@@ -227,42 +228,52 @@ console.group({formData})
           </span>
         </div>
         <div className="text-center flex mt-8">
-          <div >
-            <label className="relative">
-              <input
-                type="file"
-                accept=".png, .jpg, .jpeg"
-                onChange={handleFileChange}
-                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                ref={fileInputRef}
-              />
+          <div>
+            {!newUser ? (
+              <label className="relative">
+                <input
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  onChange={handleFileChange}
+                  className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  ref={fileInputRef}
+                />
+                <button
+                  className="shadow-0 0 7px 0 cursor-pointer text-[14px] font-[600] text-[#4A4A4A] bg-green-50 rounded-[8px] w-[186px] h-[45px] btn-shadow"
+                  onClick={handleFileButtonClick}
+
+                >
+                  Upload New Picture
+                </button>
+              </label>
+            ) : (
               <button
                 type="button"
                 className="shadow-0 0 7px 0 cursor-pointer text-[14px] font-[600] text-[#4A4A4A] bg-green-50 rounded-[8px] w-[186px] h-[45px] btn-shadow"
-                onClick={() => {
-                  !profile?.firstName && !profile.lastName ? setUserFormType('add') : handleFileButtonClick();
-                }}
-              >
-                {!profile?.firstName && !profile.lastName ? "Add Profile Details" : "Upload New Picture"}
-              </button>
-            </label>
+                onClick={() => setUserFormType('add')}
 
+              >
+                Add Profile Details
+              </button>
+            )}
           </div>
+
         </div>
       </div>
       {
         userFormType?.length ?
-          <div className="px-24 mx-12 mt-2 mb-2">
-            <h6 className="font-medium py-1 pb-4 text-base text-center">Please fill the details.</h6>
-            <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-4">
+          <div className="mx-12 px-16 mt-2 mb-2">
+            <h6 className="font-medium py-1 pb-4 pr-8 text-base text-center">Please fill the details.</h6>
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-11 gap-4">
               {/* first name */}
-              <div className="col-span-2 flex items-center">
+              <div className="col-span-5   flex items-center">
                 <label htmlFor="firstName">First Name</label>
               </div>
               <div className="col-span-1 flex items-center">
                 <span>:</span>
               </div>
-              <div className="col-span-2">
+              <div className="col-span-5  ">
                 <input
                   type="text"
                   id="firstName"
@@ -274,13 +285,13 @@ console.group({formData})
                 {errors.firstName && <span className="text-red-500 text-xs">{errors.firstName}</span>}
               </div>
               {/* last name */}
-              <div className="col-span-2 flex items-center">
+              <div className="col-span-5   flex items-center">
                 <label htmlFor="lastName">Last Name</label>
               </div>
               <div className="col-span-1 flex items-center">
                 <span>:</span>
               </div>
-              <div className="col-span-2">
+              <div className="col-span-5  ">
                 <input
                   type="text"
                   id="lastName"
@@ -291,80 +302,81 @@ console.group({formData})
                 />
                 {errors.lastName && <span className="text-red-500 text-xs">{errors.lastName}</span>}
               </div>
-                  <>            {/* state */}
-                    <div className="col-span-2 flex items-center">
-                      <label htmlFor="state">State</label>
-                    </div>
-                    <div className="col-span-1 flex items-center">
-                      <span>:</span>
-                    </div>
-                    <div className="col-span-2">
-                      <select
-                        id="state"
-                        name="stateCode"
-                        value={formData.stateCode}
-                        onChange={handleChange}
-                        className="bg-green-50 w-full p-1"
-                      >
-                        <option value="">Select</option>
-                        {states.map((state) => (
-                          <option key={state.state_code} value={state.state_code}>
-                            {state.name}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.stateCode && <span className="text-red-500 text-xs">{errors.stateCode}</span>}
-                    </div>
-                    {/* city */}
-                    <div className="col-span-2 flex items-center">
-                      <label htmlFor="city">City</label>
-                    </div>
-                    <div className="col-span-1 flex items-center">
-                      <span>:</span>
-                    </div>
-                    <div className="col-span-2">
-                      <select
-                        id="city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        className="bg-green-50 w-full p-1"
-                      >
-                        <option value="">Select</option>
-                        {cities?.map((city) => (
-                          <option key={city?.id} value={city?.name}>
-                            {city?.name}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.city && <span className="text-red-500 text-xs">{errors.city}</span>}
-                    </div>
+              <>            {/* state */}
+                <div className="col-span-5   flex items-center">
+                  <label htmlFor="state">State</label>
+                </div>
+                <div className="col-span-1 flex items-center">
+                  <span>:</span>
+                </div>
+                <div className="col-span-5  ">
+                  <select
+                    id="state"
+                    name="stateCode"
+                    value={formData.stateCode}
+                    onChange={handleChange}
+                    className="bg-green-50 w-full p-1"
+                  >
+                    <option value="">Select</option>
+                    {states.map((state) => (
+                      <option key={state.state_code} value={state.state_code}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.stateCode && <span className="text-red-500 text-xs">{errors.stateCode}</span>}
+                </div>
+                {/* city */}
+                <div className="col-span-5   flex items-center">
+                  <label htmlFor="city">City</label>
+                </div>
+                <div className="col-span-1 flex items-center">
+                  <span>:</span>
+                </div>
+                <div className="col-span-5  ">
+                  <select
+                    id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    className="bg-green-50 w-full p-1"
+                  >
+                    <option value="">Select</option>
+                    {cities?.map((city) => (
+                      <option key={city?.id} value={city?.name}>
+                        {city?.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.city && <span className="text-red-500 text-xs">{errors.city}</span>}
+                </div>
 
-                    {/* address */}
-                    <div className="col-span-2 flex items-center">
-                      <label htmlFor="address">Address</label>
-                    </div>
-                    <div className="col-span-1 flex items-center">
-                      <span>:</span>
-                    </div>
-                    <div className="col-span-2">
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        className="bg-green-50 w-full p-1"
-                      />
-                      {errors.address && <span className="text-red-500 text-xs">{errors.address}</span>}
-                    </div>
-                  </>
-              <div className="col-span-5 flex justify-end">
-                <button type="button" className="mr-5 font-semibold text-[19px] p-[2] text-center bg-slate-100 w-full text-black rounded-[27px] outline-none border-none h-[55px] hover:opacity-80" onClick={handleClose}>Cancel</button>
-                <button type="submit" className="ml-5 font-semibold text-[19px] p-[2] text-center bg-[#5AB344] w-full text-white rounded-[27px] outline-none border-none h-[55px] hover:opacity-80">Submit</button>
+                {/* address */}
+                <div className="col-span-5   flex items-center">
+                  <label htmlFor="address">Address</label>
+                </div>
+                <div className="col-span-1 flex items-center">
+                  <span>:</span>
+                </div>
+                <div className="col-span-5  ">
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="bg-green-50 w-full p-1"
+                  />
+                  {errors.address && <span className="text-red-500 text-xs">{errors.address}</span>}
+                </div>
+                </>
+                </div>
+                <div className="flex justify-end mt-4 mb-2">
+                <button type="button" className="mr-5 px-4 py-1 font-semibold text-[19px]  text-center bg-slate-100  text-black rounded-lg outline-none border-none  hover:opacity-80" onClick={handleClose}>Cancel</button>
+                <button type="submit" className="ml-5 px-4 py-1  font-semibold text-[19px]  text-center bg-[#5AB344]  text-white rounded-lg outline-none border-none  hover:opacity-80">Submit</button>
               </div>
             </form>
-          </div>
+            </div>
           : null
       }
       <Footer />
