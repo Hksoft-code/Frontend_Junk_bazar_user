@@ -166,7 +166,7 @@ const PriceCardComponent = () => {
         key={item.scrapId}
         className="relative flex w-full flex-col items-center rounded-lg border border-gray-100  cardshadow"
       >
-        <div className="relative mx-2 sm:mx-3 mt-2 sm:mt-3 flex h-44  px-3 rounded-xl w-full">
+        <div className="relative mx-2 sm:mx-3 mt-2 sm:mt-3 flex h-28  px-3 rounded-xl w-full">
           <img className="w-full rounded-xl" src={item?.docUrl} alt="product" />
           {/* <span className="absolute -top-3 left-0 m-3 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
             39% OFF
@@ -190,12 +190,12 @@ const PriceCardComponent = () => {
               {isItemInCart(item?.scrapId.toString()) ? (
                 <div
                   onClick={() => handleAddToCard(item?.scrapId)}
-                  className="w-full bg-[#e67b0f] cursor-pointer flex items-center justify-center rounded-full  px-0 sm:px-2 md:px-3 lg:px-5 h-8 min-xl:h-9 text-center text-sm min-md:text-[11px] min-xl:text-sm font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
+                  className="w-full bg-[#e67b0f] cursor-pointer mx-auto h-8 flex items-center justify-center py-1 runded-md  px-2 text-center font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
                 >
-                  <div className="flex gap-1  items-center">
+                  <button type="button" className="flex gap-1 text-xs items-center">
                     <div className="">{<CartIcon />}</div>
-                    <p className="hidden sm:block text-sm">Added to cart</p>
-                  </div>
+                    <p className="hidden sm:block">Added To Cart</p>
+                  </button>
                   {/* {isItemInCart(item?.scrapId.toString()) ? (
                 <div className="flex gap-1  items-center">
                 <div className="">{<CartIcon />}</div>
@@ -211,12 +211,12 @@ const PriceCardComponent = () => {
               ) : (
                 <div
                   onClick={() => handleAddToCard(item?.scrapId)}
-                  className="w-full bg-[#5AB344] cursor-pointer flex items-center justify-center rounded-full  px-0 sm:px-2 md:px-3 lg:px-5 h-8 min-xl:h-9 text-center text-sm min-md:text-[11px] min-xl:text-sm font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
+                  className="w-full bg-[#5AB344] cursor-pointer mx-auto flex items-center justify-center rounded-md  px-0 sm:px-2 md:px-3 lg:px-2 h-8  text-center text-sm   font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
                 >
-                  <div className="flex flex-row">
+                  <button  type="button" className="flex flex-row text-xs">
                     <div className="block sm:hidden">{<CartIcon />}</div>
                     <p className="hidden sm:block">Add to Cart</p>
-                  </div>
+                  </button>
                   {/* {isItemInCart(item?.scrapId.toString()) ? (
               <div className="flex gap-1  items-center">
               <div className="">{<CartIcon />}</div>
@@ -232,7 +232,7 @@ const PriceCardComponent = () => {
               )}
             </div>
 
-            <div className="flex items-center flex-nowrap ">
+            {/* <div className="flex items-center flex-nowrap ">
               <input
                 type="number"
                 id="quantity"
@@ -247,7 +247,7 @@ const PriceCardComponent = () => {
               <span className="font-normal min-xxl:font-medium text-[11px] min-xxl:text-[14px] ml-1">
                 QTY
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -283,7 +283,7 @@ const PriceCardComponent = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8 md:gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-8 md:gap-10">
             {renderData()}
           </div>
         </div>
