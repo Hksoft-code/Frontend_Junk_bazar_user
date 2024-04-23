@@ -192,9 +192,9 @@ const PriceCardComponent = () => {
                   onClick={() => handleAddToCard(item?.scrapId)}
                   className="w-full bg-[#e67b0f] cursor-pointer mx-auto h-8 flex items-center justify-center py-1 runded-md  px-2 text-center font-medium text-white hover:bg-[#5AB344] focus:outline-none focus:ring-4 focus:ring-blue-300 truncate"
                 >
-                  <button type="button" className="flex gap-1 text-xs items-center">
+                  <button type="button" className="flex gap-1 text-xs items-center mr-4">
                     <div className="">{<CartIcon />}</div>
-                    <p className="hidden sm:block">Added To Cart</p>
+                    <p className="hidden sm:block">Added</p>
                   </button>
                   {/* {isItemInCart(item?.scrapId.toString()) ? (
                 <div className="flex gap-1  items-center">
@@ -232,7 +232,7 @@ const PriceCardComponent = () => {
               )}
             </div>
 
-            {/* <div className="flex items-center flex-nowrap ">
+            <div className="flex items-center flex-nowrap ">
               <input
                 type="number"
                 id="quantity"
@@ -247,7 +247,7 @@ const PriceCardComponent = () => {
               <span className="font-normal min-xxl:font-medium text-[11px] min-xxl:text-[14px] ml-1">
                 QTY
               </span>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

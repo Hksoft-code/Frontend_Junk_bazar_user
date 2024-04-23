@@ -79,7 +79,6 @@ const TrackOrderList = () => {
       },
     });
   };
-  console.log("order?.orderStatus", orderList);
 
   return (
     <div className="w-full mt-32 flex justify-center items-center lg:max-w-[1100px] mx-auto">
