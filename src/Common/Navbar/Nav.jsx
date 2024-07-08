@@ -1,4 +1,4 @@
-import junk_logo from "../../assets/PNG/junk bazar logo 1.png";
+import junk_logo from "../../assets/PNG/Junk Bazar Logo Black.png";
 import cart from "../../assets/SVG/solar_cart-plus-bold.svg";
 import menu from "../../assets/SVG/jam_menu.svg";
 import close from "../../assets/SVG/mobile-icon/close.svg";
@@ -88,7 +88,7 @@ const Nav = () => {
             <img
               src={junk_logo}
               alt="Junk-bazzar-logo"
-              className="w-[115px] h-[8] lg:w-[202px] lg:h-[53px] cursor-pointer"
+              className="w-[115px] h-[8] lg:w-[220px] lg:h-[53px] cursor-pointer"
             />
           </Link>
 
