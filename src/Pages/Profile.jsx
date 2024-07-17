@@ -11,14 +11,14 @@ import { generateSignedUrl, uploadFileOnS3 } from "../Services/upload";
 const Profile = () => {
   const [profile, setProfileData] = useState({});
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    stateCode: '',
-    city: '',
-    address: ''
+    firstName: "",
+    lastName: "",
+    stateCode: "",
+    city: "",
+    address: "",
   });
   const [errors, setErrors] = useState({});
-  const [userFormType, setUserFormType] = useState('');
+  const [userFormType, setUserFormType] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -32,15 +32,19 @@ const Profile = () => {
       setErrors({ ...errors, [name]: null });
     }
     // Update cities when state is changed
-    if (name === 'stateCode') {
-      const selectedState = states.find(state => state.state_code === value);
+    if (name === "stateCode") {
+      const selectedState = states.find((state) => state.state_code === value);
       if (selectedState) {
         setCities(selectedState.cities);
-        setFormData({ ...formData, city: '', stateCode: selectedState?.state_code }); // Reset city when state changes
+        setFormData({
+          ...formData,
+          city: "",
+          stateCode: selectedState?.state_code,
+        }); // Reset city when state changes
       } else {
         // Reset city and state code if no state is selected
         setCities([]);
-        setFormData({ ...formData, city: '', stateCode: '' });
+        setFormData({ ...formData, city: "", stateCode: "" });
       }
     }
   };
@@ -51,12 +55,15 @@ const Profile = () => {
       firstName: formData?.firstName,
       lastName: formData?.lastName,
       city: formData?.city,
-      countryCode: 'In',
+      countryCode: "In",
       stateCode: formData?.stateCode,
-      address: formData?.address
+      address: formData?.address,
     };
     try {
-      const addedProfileDataResponse = await axiosInstance.post("/addUserDetail", payload);
+      const addedProfileDataResponse = await axiosInstance.post(
+        "/addUserDetail",
+        payload
+      );
       handleClose();
       fetchData();
     } catch (error) {
@@ -71,26 +78,34 @@ const Profile = () => {
       const value = formData[field];
       if (userFormType?.length) {
         // Verify all fields if userFormType is 'add'
-        if (field === 'city' && value.length === 0) {
-          newErrors[field] = 'Please select a city.';
-        } else if (field === 'stateCode' && value.length === 0) {
-          newErrors[field] = 'Please select a state.';
-        } else if (field !== 'stateCode' && field !== 'city' && value.length < 4) {
-          newErrors[field] = 'Field must be at least 4 characters long.';
+        if (field === "city" && value.length === 0) {
+          newErrors[field] = "Please select a city.";
+        } else if (field === "stateCode" && value.length === 0) {
+          newErrors[field] = "Please select a state.";
+        } else if (
+          field !== "stateCode" &&
+          field !== "city" &&
+          value.length < 4
+        ) {
+          newErrors[field] = "Field must be at least 4 characters long.";
         }
       } else if (userFormType?.length) {
         // Verify only firstName and lastName if userFormType is 'edit'
-        if ((field === 'firstName' || field === 'lastName') && value.length < 4) {
-          newErrors[field] = 'Field must be at least 4 characters long.';
+        if (
+          (field === "firstName" || field === "lastName") &&
+          value.length < 4
+        ) {
+          newErrors[field] = "Field must be at least 4 characters long.";
         }
       }
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      userFormType === 'edit' ? updateProfile(null, formData) : addProfileDetails();
+      userFormType === "edit"
+        ? updateProfile(null, formData)
+        : addProfileDetails();
     }
   };
-
 
   const fetchData = async () => {
     let userData = {};
@@ -98,16 +113,16 @@ const Profile = () => {
       const response = await axiosInstance.get("/getCurrentUser");
       if (response.status === 200) {
         const data = JSON.parse(response.data.data);
-        console.log("==== CURRENT USER ===", { data })
+        console.log("==== CURRENT USER ===", { data });
         setProfileData(data);
         const formData = {
-          firstName: data?.firstName ? data?.firstName : '',
-          lastName: data?.lastName ? data?.lastName : '',
-          stateCode: data?.stateCode ? data?.stateCode : '',
-          city: data?.city ? data?.city : '',
-          address: data?.address ? data?.address : ''
+          firstName: data?.firstName ? data?.firstName : "",
+          lastName: data?.lastName ? data?.lastName : "",
+          stateCode: data?.stateCode ? data?.stateCode : "",
+          city: data?.city ? data?.city : "",
+          address: data?.address ? data?.address : "",
         };
-        setFormData(formData)
+        setFormData(formData);
         userData = data;
         console.log({ userData });
       } else {
@@ -118,7 +133,7 @@ const Profile = () => {
       console.warn("Error fetching data:", error);
       // Handle the error or redirect to login page
     } finally {
-      fetchCountry(userData?.stateCode)
+      fetchCountry(userData?.stateCode);
     }
   };
 
@@ -126,12 +141,14 @@ const Profile = () => {
     const response = await getCountriesDetails();
     const { states } = response[0];
     setStates(states);
-    const value = previousStateCodeValue ? previousStateCodeValue : profile?.stateCode
+    const value = previousStateCodeValue
+      ? previousStateCodeValue
+      : profile?.stateCode;
     const previousState = states.find((state) => {
-      console.log(value, "Nice")
-      return state.state_code === value
+      console.log(value, "Nice");
+      return state.state_code === value;
     });
-    console.log({ previousState, states })
+    console.log({ previousState, states });
     if (previousState?.cities?.length) setCities(previousState?.cities);
   };
 
@@ -140,15 +157,14 @@ const Profile = () => {
     fetchCountry();
   }, []);
 
-
   const handleFileButtonClick = () => {
     fileInputRef.current.click();
   };
 
   const handleClose = () => {
     setErrors({});
-    setUserFormType('')
-  }
+    setUserFormType("");
+  };
 
   const updateProfile = async (imageKey, updatedData) => {
     const payload = updatedData ? updatedData : {};
@@ -171,65 +187,71 @@ const Profile = () => {
       alert("Invalid file type. Please select a PNG, JPG, or JPEG file.");
     setSelectedFile(file);
     try {
-      const imageSignedObj = await generateSignedUrl(
-        file.name,
-        file.type,
-      );
+      const imageSignedObj = await generateSignedUrl(file.name, file.type);
       const imageKey = imageSignedObj.key;
-      await uploadFileOnS3(
-        file,
-        imageSignedObj.signedUrl
-      );
+      await uploadFileOnS3(file, imageSignedObj.signedUrl);
       await updateProfile(imageKey, formData);
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
     }
   };
-
-  const newUser = !profile.firstName && !profile.lastName;
-
+console.log("profile....",profile)
   return (
     <>
       <Nav />
       <div className="flex  px-24 py-12 m-12 mt-24 justify-between items-center shadow-lg hover:shadow-2xl transition duration-300 ease-in-out  ">
         <div className="flex items-center">
           <img
-            src={profile.profileUrl ? profile.profileUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGUYpBf56aEz0Oihd1-ZWykIwFmDf0yV_LHg&usqp=CAU"}
+            src={
+              profile.profileUrl
+                ? profile.profileUrl
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGUYpBf56aEz0Oihd1-ZWykIwFmDf0yV_LHg&usqp=CAU"
+            }
             className="w-[138px] h-[138px] mr-4 rounded-full"
             alt=""
           />
           <span className="mt-8">
-            <h2 className="font-semibold text-[#343434]  flex items-center text-[24px]">
-              {newUser ? "Name" : `${profile.firstName ? profile.firstName : '-'} ${profile.lastName ? profile.lastName : '-'}`}
-              {
-                profile?.firstName && profile?.lastName ?
+            <span className="text-[#343434]  flex items-center gap-2">
+              <p className="text-[18px] font-semibold">Name: </p>
+              <p className="text-[17px] font-normal">
+                {!profile.firstName && !profile.lastName
+                  ? "N/A"
+                  : `${profile.firstName ? profile.firstName : "-"} ${
+                      profile.lastName ? profile.lastName : "-"
+                    }`}
+              </p>
+              <h2 className="font-semibold text-[#343434]  flex items-center text-[18px]">
+                {profile?.firstName && profile?.lastName ? (
                   <img
                     src={edit}
                     onClick={() => setUserFormType("edit")}
                     alt=""
-                    className="w-[13px] h-[13px] mx-4 mt-1 "
+                    className="w-[13px] h-[13px] ml-1"
                   />
-                  : null
-              }
-            </h2>
-            <p className="font-[400] text-[20.32px] text-[#4A4A4A] mr-2 ml-2">
-              {profile.dialCode}{' '} {profile.phoneNumber}
-            </p>
-            <span className="flex">
-              <img
-                src={location}
-                alt=""
-                className="w-[24px] h-[26px] mt-1 "
-              />
-              <p className="font-[400] text-[20.32px] text-[#4A4A4A] mr-2 ml-2">
-                {"India"},{' '} {profile?.stateCode ? profile?.stateCode : 'State code'}, {' '} {profile.city ? profile.city : "City"}.
+                ) : null}
+              </h2>
+            </span>
+
+            <span className=" text-[#4A4A4A]  flex items-center gap-2">
+              <p className="text-[18px] font-semibold">Phone Number: </p>
+              <p className="text-[17px] font-normal">
+                {profile.dialCode} {profile.phoneNumber}
               </p>
+            </span>
+            <span className="flex items-center">
+              <img src={location} alt="" className="w-[24px] h-[27px] mt-1 " />
+              <span className="font-[400] text-[17px] text-[#4A4A4A] mr-2 flex gap-1">
+                {"India"},{" "}
+                <p>State: {profile?.stateCode ? profile?.stateCode : "N/A"} </p>
+                ,<p>City: {profile.city ? profile.city : "N/A"} </p> ,
+                <p>Pin Code: {profile.pincode ? profile.pincode : "N/A"} </p>
+              </span>
             </span>
           </span>
         </div>
         <div className="text-center flex mt-8">
           <div>
-            {!newUser ? (
+            {!profile.firstName && !profile.lastName ? (
               <label className="relative">
                 <input
                   type="file"
@@ -241,7 +263,6 @@ const Profile = () => {
                 <button
                   className="shadow-0 0 7px 0 cursor-pointer text-[14px] font-[600] text-[#4A4A4A] bg-green-50 rounded-[8px] w-[186px] h-[45px] btn-shadow"
                   onClick={handleFileButtonClick}
-
                 >
                   Upload New Picture
                 </button>
@@ -250,22 +271,21 @@ const Profile = () => {
               <button
                 type="button"
                 className="shadow-0 0 7px 0 cursor-pointer text-[14px] font-[600] text-[#4A4A4A] bg-green-50 rounded-[8px] w-[186px] h-[45px] btn-shadow"
-                onClick={() => setUserFormType('add')}
-
+                onClick={() => setUserFormType("add")}
               >
                 Add Profile Details
               </button>
             )}
           </div>
-
         </div>
       </div>
-      {
-        userFormType?.length ?
-          <div className="mx-12 px-16 mt-2 mb-2">
-            <h6 className="font-medium py-1 pb-4 pr-8 text-base text-center">Please fill the details.</h6>
-            <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-11 gap-4">
+      {userFormType?.length ? (
+        <div className="mx-12 px-16 mt-2 mb-2">
+          <h6 className="font-medium py-1 pb-4 pr-8 text-base text-center">
+            Please fill the details.
+          </h6>
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-11 gap-4">
               {/* first name */}
               <div className="col-span-5   flex items-center">
                 <label htmlFor="firstName">First Name</label>
@@ -282,7 +302,11 @@ const Profile = () => {
                   onChange={handleChange}
                   className="bg-green-50 w-full p-1"
                 />
-                {errors.firstName && <span className="text-red-500 text-xs">{errors.firstName}</span>}
+                {errors.firstName && (
+                  <span className="text-red-500 text-xs">
+                    {errors.firstName}
+                  </span>
+                )}
               </div>
               {/* last name */}
               <div className="col-span-5   flex items-center">
@@ -300,9 +324,15 @@ const Profile = () => {
                   onChange={handleChange}
                   className="bg-green-50 w-full p-1"
                 />
-                {errors.lastName && <span className="text-red-500 text-xs">{errors.lastName}</span>}
+                {errors.lastName && (
+                  <span className="text-red-500 text-xs">
+                    {errors.lastName}
+                  </span>
+                )}
               </div>
-              <>            {/* state */}
+              <>
+                {" "}
+                {/* state */}
                 <div className="col-span-5   flex items-center">
                   <label htmlFor="state">State</label>
                 </div>
@@ -324,7 +354,11 @@ const Profile = () => {
                       </option>
                     ))}
                   </select>
-                  {errors.stateCode && <span className="text-red-500 text-xs">{errors.stateCode}</span>}
+                  {errors.stateCode && (
+                    <span className="text-red-500 text-xs">
+                      {errors.stateCode}
+                    </span>
+                  )}
                 </div>
                 {/* city */}
                 <div className="col-span-5   flex items-center">
@@ -348,9 +382,10 @@ const Profile = () => {
                       </option>
                     ))}
                   </select>
-                  {errors.city && <span className="text-red-500 text-xs">{errors.city}</span>}
+                  {errors.city && (
+                    <span className="text-red-500 text-xs">{errors.city}</span>
+                  )}
                 </div>
-
                 {/* address */}
                 <div className="col-span-5   flex items-center">
                   <label htmlFor="address">Address</label>
@@ -367,18 +402,32 @@ const Profile = () => {
                     onChange={handleChange}
                     className="bg-green-50 w-full p-1"
                   />
-                  {errors.address && <span className="text-red-500 text-xs">{errors.address}</span>}
+                  {errors.address && (
+                    <span className="text-red-500 text-xs">
+                      {errors.address}
+                    </span>
+                  )}
                 </div>
-                </>
-                </div>
-                <div className="flex justify-end mt-4 mb-2">
-                <button type="button" className="mr-5 px-4 py-1 font-semibold text-[19px]  text-center bg-slate-100  text-black rounded-lg outline-none border-none  hover:opacity-80" onClick={handleClose}>Cancel</button>
-                <button type="submit" className="ml-5 px-4 py-1  font-semibold text-[19px]  text-center bg-[#5AB344]  text-white rounded-lg outline-none border-none  hover:opacity-80">Submit</button>
-              </div>
-            </form>
+              </>
             </div>
-          : null
-      }
+            <div className="flex justify-end mt-4 mb-2">
+              <button
+                type="button"
+                className="mr-5 px-4 py-1 font-semibold text-[19px]  text-center bg-slate-100  text-black rounded-lg outline-none border-none  hover:opacity-80"
+                onClick={handleClose}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="ml-5 px-4 py-1  font-semibold text-[19px]  text-center bg-[#5AB344]  text-white rounded-lg outline-none border-none  hover:opacity-80"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : null}
       <Footer />
     </>
   );

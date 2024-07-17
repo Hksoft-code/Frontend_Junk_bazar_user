@@ -10,11 +10,7 @@ const Footer = () => {
         <div className="block md:grid md:grid-cols-2 lg:grid-cols-4 lg:pb-10 p-2">
           <section className="">
             <div className="">
-              <img
-                src={junk_logo}
-                alt="junzbazar-logo"
-                className="w-40 my-5"
-              />
+              <img src={junk_logo} alt="junzbazar-logo" className="w-40 my-5" />
             </div>
           </section>
           <section>
@@ -58,18 +54,19 @@ const Footer = () => {
               <h1 className="font-bold tracking-widest">Reach Us</h1>
               <ul className="no-underline leading-loose">
                 <li>
-                  <Link  to="tel:+91 97097 09248">+91 97097 09248</Link>
+                  <Link to="tel:+91 97097 09248">+91 97097 09248</Link>
                 </li>
                 <li>
-                  <Link  to="mailto:info@junkBazar.com">info@junkBazar.com</Link>
+                  <Link to="mailto:info@junkBazar.com">info@junkBazar.com</Link>
                 </li>
                 <li>
-                  <Link 
+                  <Link
                     to="https://maps.app.goo.gl/reA58BrXWAxRkBaH7"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Kankarbagh Main Rd, Kumhar Toli, Ghrounda, Patna, Bihar 800020
+                    Kankarbagh Main Rd, Kumhar Toli, Ghrounda, Patna, Bihar
+                    800020
                   </Link>
                 </li>
               </ul>
@@ -85,7 +82,7 @@ const Footer = () => {
               className="py-2 rounded-tl-full bg-white text-black rounded-bl-full px-3 border border-gray-300 shadow-sm"
             />
             <button
-              onClick={() => { }}
+              onClick={() => {}}
               className="rounded-tr-full rounded-br-full py-[0.6rem] px-2 text-sm text-black"
             >
               Subscribe
@@ -103,14 +100,28 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row pb-1 justify-around items-center mt-3">
           <p className=" text-xl mt-4 text-white pb-5">
-            &copy;2023 JunkBazar. All rights reserved. Powered by Kjxsofttech
+            &copy;2023 JunkBazar. All rights reserved.
+            <a
+              href="https://kjxsofttech.com"
+              className="text-white text-decoration-none"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Powered by{" "}
+              <strong className="font-medium">
+                KJX Softtech Private Limited
+              </strong>
+            </a>{" "}
           </p>
           <div className="flex justify-between items-center">
-            <Link to="https://play.google.com/store/apps/details?id=com.junkbazar.com" target="_blank" rel="noopener noreferrer">
+            <Link
+              to="https://play.google.com/store/apps/details?id=com.junkbazar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={google} alt="google-img" className="w-36" />
             </Link>
           </div>
-
         </div>
       </div>
     </footer>
