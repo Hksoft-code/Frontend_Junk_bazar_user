@@ -93,7 +93,7 @@ const Nav = () => {
           </Link>
 
           <div className="text-zinc-500 text-center text-base font-semibold tracking-tight hidden lg:flex">
-            <ul className="flex justify-between space-x-4 items-center">
+            <ul className="flex justify-between space-x-4 gap-8 items-center">
               <Link to="/">
                 <li
                   className={`cursor-pointer ${
@@ -119,6 +119,15 @@ const Nav = () => {
                   }`}
                 >
                   Price List
+                </li>
+              </Link>
+              <Link to="/auction">
+                <li
+                  className={`cursor-pointer ${
+                    isActive("/auction") && "text-lime-500 font-bold"
+                  }`}
+                >
+                  Auction
                 </li>
               </Link>
               <Link to="/contact-us">

@@ -25,6 +25,8 @@ import Summary from "./Module/summary/Summary.jsx";
 import TermsCondition from "./Auth/Pages/TermsCondition.jsx";
 import axiosInstance from "./api-config/axiosInstance";
 import Loader from "./Components/Loader.jsx";
+import AuctionPage from "./Pages/AuctionPage.jsx";
+import ViewAction from "./Pages/ViewAction.jsx";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -77,6 +79,9 @@ function App() {
         />
         <Route path="/cart" element={<Protected Component={CardPage} />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/auction" element={<AuctionPage />} />
+        <Route path="/view-auction" element={<ViewAction />} />
+
         <Route path="/upload-scrap" element={<UploadScrap />} />
         <Route path="/otp-verify" element={<OtpVerify />} />
         <Route
