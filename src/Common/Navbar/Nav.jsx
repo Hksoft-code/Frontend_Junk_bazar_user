@@ -121,7 +121,7 @@ const Nav = () => {
                   Price List
                 </li>
               </Link>
-              <Link to="/auction">
+              {/* <Link to="/auction">
                 <li
                   className={`cursor-pointer ${
                     isActive("/auction") && "text-lime-500 font-bold"
@@ -129,7 +129,7 @@ const Nav = () => {
                 >
                   Auction
                 </li>
-              </Link>
+              </Link> */}
               <Link to="/contact-us">
                 <li
                   className={`cursor-pointer ${

@@ -15,7 +15,7 @@ const AuctionPage = () => {
   const navigate = useNavigate();
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   return (
-    <div className="h-screen w-full overflow-hidden flex flex-col">
+    <div className="h-screen w-full overflow-hidden flex flex-col relative">
       <div className="h-[100px]">
         <Nav />
       </div>

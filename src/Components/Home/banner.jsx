@@ -2,10 +2,9 @@ import search_icon from "../../assets/SVG/Search Icon.svg";
 import phone from "../../assets/PNG/junkbazar 1.png";
 import apple_logo from "../../assets/SVG/Vector (1).svg";
 import playstore_logo from "../../assets/PNG/playstore.png";
-
+import { LuDownload } from "react-icons/lu";
 
 const Banner = () => {
-
   return (
     <main className=" lg:mb-8">
       <section className="max-w-[1200px] mx-auto relative lg:pt-10 mt-10 lg:mt-16">
@@ -54,11 +53,11 @@ const Banner = () => {
 
             <div className="mt-10">
               <div className="flex items-center justify-center md:justify-start">
-              <img
-                    src={playstore_logo}
-                    alt="playstore-logo"
-                    className="relative w-[130px] h-12 mr-2"
-                  />
+                <img
+                  src={playstore_logo}
+                  alt="playstore-logo"
+                  className="relative w-[130px] h-12 mr-2"
+                />
 
                 {/* <div className="flex justify-between items-center mr-6 bg-black px-2 lg:px-3 py-2 text-white rounded">
                   <img
@@ -72,16 +71,34 @@ const Banner = () => {
                   </span>
                 </div> */}
               </div>
+              <div className="flex flex-row gap-4 mt-4">
+                <a href="https://drive.google.com/file/d/1zLyOpmpTfgP9V_6M2mXI9mge9DwHmvIZ/view?usp=sharing">
+                  <div className="bg-lime-primary w-[200px] gap-1 h-9 text-white font-semibold text-[16px] rounded-md text-center flex justify-center items-center">
+                    <p>
+                      <LuDownload className=" text-black" />
+                    </p>
+                    <p> Get Your User App</p>
+                  </div>
+                </a>
+                <a href="https://drive.google.com/file/d/1qbhfH2DYLfFOcXYudYVhCRUhqiH4NI0z/view?usp=sharing">
+                  <div className="bg-lime-primary w-[200px] gap-1 h-9 text-white font-semibold text-[16px] rounded-md text-center flex justify-center items-center">
+                    <p>
+                      <LuDownload className=" text-black" />
+                    </p>
+                    <p> Get Your Vendor App</p>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
 
           <div className="mt-16 lg:mt-0">
-          <div className="relative">
-  <img
-    src={phone}
-    alt="junk-bazzar-phone"
-    className="w-[350px] md:w-[400px] lg:w-[520px] lg:h-[543px] rounded-[35px]"
-  />
+            <div className="relative">
+              <img
+                src={phone}
+                alt="junk-bazzar-phone"
+                className="w-[350px] md:w-[400px] lg:w-[520px] lg:h-[543px] rounded-[35px]"
+              />
             </div>
           </div>
         </div>
