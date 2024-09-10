@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-junkbazar-primary py-2 md:p-1 mt-10 text-white font-['Gilroy-Medium']">
+    <footer className="bg-lime-400 py-2 md:p-1 mt-10 text-white font-['Gilroy-Medium']">
       <div className="p-0 md:p-2 lg:px-10 ">
         <div className="block md:grid md:grid-cols-2 lg:grid-cols-4 lg:pb-10 p-2">
           <section className="">
