@@ -1,11 +1,17 @@
 import junk_logo from "../../assets/PNG/junk bazar logo 1.png";
 
 import google from "../../assets/SVG/Google play.svg";
+import facebook from "../../assets/PNG/facebook-48.png";
+import instagram from "../../assets/PNG/icons8-instagram-48.png";
+import youtube from "../../assets/PNG/icons8-youtube-48.png";
+import linkedin from "../../assets/PNG/icons8-linkedin-48.png";
+import twitter from "../../assets/PNG/icons8-twitter-50.png";
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-lime-400 py-2 md:p-1 mt-10 text-white font-['Gilroy-Medium']">
+    <footer className="bg-junkbazar-primary py-2 md:p-1 mt-10 text-white font-['Gilroy-Medium']">
       <div className="p-0 md:p-2 lg:px-10 ">
         <div className="block md:grid md:grid-cols-2 lg:grid-cols-4 lg:pb-10 p-2">
           <section className="">
@@ -70,6 +76,46 @@ const Footer = () => {
                   </Link>
                 </li>
               </ul>
+              <div className="mt-1">
+                <p className="text-[17px] font-bold">Follow Us</p>
+                <div className="flex flex-row gap-2 mt-1">
+                  <a href="https://www.facebook.com/junkbazar2021/">
+                    <img
+                      src={facebook}
+                      className="w-[40px] h-[40px]"
+                      alt="facebook"
+                    />
+                  </a>
+                  <a href="https://www.instagram.com/junk_bazar/">
+                    <img
+                      src={instagram}
+                      className="w-[40px] h-[40px]"
+                      alt="instagram"
+                    />
+                  </a>
+                  <a href="https://x.com/Junk_Bazar">
+                    <img
+                      src={twitter}
+                      className="w-[40px] h-[40px]"
+                      alt="twitter"
+                    />
+                  </a>
+                  <a href="https://www.linkedin.com/company/junk-bazar-pvt-ltd/">
+                    <img
+                      src={linkedin}
+                      className="w-[40px] h-[40px]"
+                      alt="linkedin"
+                    />
+                  </a>
+                  <a href="https://www.youtube.com/@JunkBazarPvtLtd">
+                    <img
+                      src={youtube}
+                      className="w-[40px] h-[40px]"
+                      alt="youtube"
+                    />
+                  </a>
+                </div>
+              </div>
             </div>
           </section>
 
