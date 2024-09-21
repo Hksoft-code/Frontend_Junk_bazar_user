@@ -27,6 +27,7 @@ import axiosInstance from "./api-config/axiosInstance";
 import Loader from "./Components/Loader.jsx";
 import AuctionPage from "./Pages/AuctionPage.jsx";
 import ViewAction from "./Pages/ViewAction.jsx";
+import PrivacyPolicy from "./Pages/PrivacyPolicy.jsx";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -106,6 +107,7 @@ function App() {
         <Route path="/unauthorized" element={<UnauthorizedAccessPage />} />
         <Route path="/addAddress" element={<ChangeAdddressPage />} />
         <Route path="/summaryOrder" element={<Summary />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </div>
   );
