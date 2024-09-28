@@ -28,6 +28,8 @@ import Loader from "./Components/Loader.jsx";
 import AuctionPage from "./Pages/AuctionPage.jsx";
 import ViewAction from "./Pages/ViewAction.jsx";
 import PrivacyPolicy from "./Pages/PrivacyPolicy.jsx";
+import BlogDetailPage from "./Components/blogs/BlogDetailPage.jsx";
+import BlogHomePage from "./Components/blogs/BlogHomePage.jsx";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -82,7 +84,6 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/auction" element={<AuctionPage />} />
         <Route path="/view-auction" element={<ViewAction />} />
-
         <Route path="/upload-scrap" element={<UploadScrap />} />
         <Route path="/otp-verify" element={<OtpVerify />} />
         <Route
@@ -108,6 +109,11 @@ function App() {
         <Route path="/addAddress" element={<ChangeAdddressPage />} />
         <Route path="/summaryOrder" element={<Summary />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/blog/The-Kabadiwala-Contribution-to-the-Environment"
+          element={<BlogDetailPage />}
+        />
+        <Route path="/blogs" element={<BlogHomePage />} />{" "}
       </Routes>
     </div>
   );

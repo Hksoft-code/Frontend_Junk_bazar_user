@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 
 import { TfiHeadphoneAlt } from "react-icons/tfi";
-import {logOut} from "../../Services/user"
-import showSuccessMessage from "../../utils/SweetAlert"
+import { logOut } from "../../Services/user";
+import showSuccessMessage from "../../utils/SweetAlert";
 const Nav = () => {
   const token = localStorage.getItem("token");
   const [mobileNav, setMobileNav] = useState(false);
@@ -38,20 +38,19 @@ const Nav = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
-  const[cardQuantityValue,setCardQuantityValue]=useState("");
+  const [cardQuantityValue, setCardQuantityValue] = useState("");
   useEffect(() => {
     if (localStorage.getItem("totalScrapCount")) {
       setCardQuantityValue(localStorage.getItem("totalScrapCount").toString());
     } else {
-      setCardQuantityValue("")
-
+      setCardQuantityValue("");
     }
   }, []);
   useParams();
 
-  const handleLogout = async () => {    
+  const handleLogout = async () => {
     try {
-    const response = await logOut()
+      const response = await logOut();
       localStorage.clear();
       setOpen(false);
       navigate("/");
@@ -66,16 +65,15 @@ const Nav = () => {
     }
   };
 
- 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const cartQuantity = queryParams.get("items");
-  
+
   const isActive = (path) => {
     // Check if the current path matches the link path
     return location.pathname === path;
   };
- 
+
   return (
     <nav>
       <div>
@@ -110,6 +108,15 @@ const Nav = () => {
                   }`}
                 >
                   About Us
+                </li>
+              </Link>
+              <Link to="/blogs">
+                <li
+                  className={`cursor-pointer ${
+                    isActive("/blogs") && "text-lime-500 font-bold"
+                  }`}
+                >
+                  Blogs
                 </li>
               </Link>
               <Link to="/pricing">
