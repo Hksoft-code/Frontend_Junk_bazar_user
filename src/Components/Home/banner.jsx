@@ -47,7 +47,7 @@ const Banner = () => {
                 Junkbazar
               </h1>
               <p className=" w-[300px] md:w-[350px] lg:w-[370px] text-zinc-500 text-base lg:text-lg font-normal font-['Gilroy-Regular'] leading-normal tracking-tight">
-                Online platform for scrap solution, present in all major cities
+              Online Platform for Scrap Solution, Present in all Major Cities to Help Manage Waste Material Effectively.
               </p>
             </div>
 

@@ -40,8 +40,7 @@ const About = () => {
               Fast Pickup
             </h1>
             <p className="max-w-[200px] mx-auto">
-              We provide professional pickup services to scrap your materials in
-              a safe manner.
+            We provide professional pickup services to scrap your Waste Materials safely.
             </p>
           </div>
 
@@ -70,8 +69,7 @@ const About = () => {
               Scrap Rate Calculaor
             </h1>
             <p className="max-w-[200px] mx-auto">
-              Want to know the worth of your scrap before selling it? Use our
-              online calculator to calculate how much your scrap is worth.
+            Want to know the worth of your scrap before selling it? Use our online calculator provided by our Waste Management Company to calculate how much your scrap is worth.
             </p>
           </div>
         </section>
