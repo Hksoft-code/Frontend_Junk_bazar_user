@@ -52,10 +52,9 @@ const BlogHomePage = () => {
             <div className="max-w-[350px] border-solid border-[1px] border-lime-400 rounded-lg p-3 shadow-2xl">
               <img className="w-full" src={blog1} alt="" />
               <p className="text-lime-400 mt-3">Junk Bazar • 2 Sep 2024</p>
-              <h1 className="mt-3 text-xl font-semibold">Lorem Text Dummy</h1>
+              <h1 className="mt-3 text-xl font-semibold">{e.heading}</h1>
               <p className="mt-1 font-extralight">
-                Lorem Ipsum is simply dummy text of the lorem printing and
-                typesetting industry standard
+                {e.subHeading}
               </p>
               <div className="flex mt-4 gap-2">
                 <button className="bg-lime-400 text-white px-4 rounded-xl">
@@ -91,30 +90,27 @@ export default BlogHomePage;
 
 const arr = [
   {
-    heading: "Lorem Text Dummy",
+    heading: "स्क्रैप धातु पुनर्चक्रण के पर्यावरणीय लाभ",
     subHeading:
-      "Lorem Ipsum is simply dummy text of the lorem printing andtypesetting industry standard",
-  },
-  {
-    heading: "Lorem Text Dummy",
+      "स्क्रैप धातु पुनर्चक्रण (Scrap metal recycling) एक प्रभावी तरीका है जो न केवल अपशिष्ट प्रबंधन में सुधार करता है बल्कि पर्यावरणीय दृष्टिकोण से भी महत्वपूर्ण योगदान देता है।",
+  },{
+    heading: "स्क्रैप धातु पुनर्चक्रण के पर्यावरणीय लाभ",
     subHeading:
-      "Lorem Ipsum is simply dummy text of the lorem printing andtypesetting industry standard",
-  },
-  {
-    heading: "Lorem Text Dummy",
+      "स्क्रैप धातु पुनर्चक्रण (Scrap metal recycling) एक प्रभावी तरीका है जो न केवल अपशिष्ट प्रबंधन में सुधार करता है बल्कि पर्यावरणीय दृष्टिकोण से भी महत्वपूर्ण योगदान देता है।",
+  },{
+    heading: "स्क्रैप धातु पुनर्चक्रण के पर्यावरणीय लाभ",
     subHeading:
-      "Lorem Ipsum is simply dummy text of the lorem printing andtypesetting industry standard",
-  },
-  {
-    heading: "Lorem Text Dummy",
+      "स्क्रैप धातु पुनर्चक्रण (Scrap metal recycling) एक प्रभावी तरीका है जो न केवल अपशिष्ट प्रबंधन में सुधार करता है बल्कि पर्यावरणीय दृष्टिकोण से भी महत्वपूर्ण योगदान देता है।",
+  },{
+    heading: "स्क्रैप धातु पुनर्चक्रण के पर्यावरणीय लाभ",
     subHeading:
-      "Lorem Ipsum is simply dummy text of the lorem printing andtypesetting industry standard",
-  },
-  {
-    heading: "Lorem Text Dummy",
+      "स्क्रैप धातु पुनर्चक्रण (Scrap metal recycling) एक प्रभावी तरीका है जो न केवल अपशिष्ट प्रबंधन में सुधार करता है बल्कि पर्यावरणीय दृष्टिकोण से भी महत्वपूर्ण योगदान देता है।",
+  },{
+    heading: "स्क्रैप धातु पुनर्चक्रण के पर्यावरणीय लाभ",
     subHeading:
-      "Lorem Ipsum is simply dummy text of the lorem printing andtypesetting industry standard",
+      "स्क्रैप धातु पुनर्चक्रण (Scrap metal recycling) एक प्रभावी तरीका है जो न केवल अपशिष्ट प्रबंधन में सुधार करता है बल्कि पर्यावरणीय दृष्टिकोण से भी महत्वपूर्ण योगदान देता है।",
   },
+  
 ];
 const posterArr = [
   {
