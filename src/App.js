@@ -30,6 +30,7 @@ import ViewAction from "./Pages/ViewAction.jsx";
 import PrivacyPolicy from "./Pages/PrivacyPolicy.jsx";
 import BlogDetailPage from "./Components/blogs/BlogDetailPage.jsx";
 import BlogHomePage from "./Components/blogs/BlogHomePage.jsx";
+import Blog1 from "./Components/blogs/Blog1.js";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -110,8 +111,8 @@ function App() {
         <Route path="/summaryOrder" element={<Summary />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route
-          path="/blog/The-Kabadiwala-Contribution-to-the-Environment"
-          element={<BlogDetailPage />}
+          path="/blogs/1"
+          element={<Blog1 />}
         />
         <Route path="/blogs" element={<BlogHomePage />} />{" "}
       </Routes>

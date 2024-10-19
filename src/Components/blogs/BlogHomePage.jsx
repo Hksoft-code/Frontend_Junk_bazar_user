@@ -13,8 +13,10 @@ import poster8 from "../../../src/assets/poster8.jpeg";
 import poster9 from "../../../src/assets/poster9.jpeg";
 import Junk from "../AboutUs/Junk";
 import Footer from "../../Common/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 const BlogHomePage = () => {
+  const navigate=useNavigate()
   return (
     <div>
       <Nav />
@@ -57,7 +59,7 @@ const BlogHomePage = () => {
                 {e.subHeading}
               </p>
               <div className="flex mt-4 gap-2">
-                <button className="bg-lime-400 text-white px-4 rounded-xl">
+                <button onClick={()=>navigate(`/blogs/${e.url}`)} className="bg-lime-400 text-white px-4 rounded-xl">
                   Read more
                 </button>
                 
@@ -88,6 +90,7 @@ export default BlogHomePage;
 
 const arr = [
   {
+    url:1,
     heading: "स्क्रैप धातु पुनर्चक्रण के पर्यावरणीय लाभ",
     subHeading:
       "स्क्रैप धातु पुनर्चक्रण (Scrap metal recycling) एक प्रभावी तरीका है जो न केवल अपशिष्ट प्रबंधन में सुधार करता है बल्कि पर्यावरणीय दृष्टिकोण से भी महत्वपूर्ण योगदान देता है।",
